@@ -1,14 +1,46 @@
 import { useState } from "react";
 
-import { fetchTimelineData, MonthData } from "../timeline-data";
+import {
+	fetchTimelineData,
+	UserInfo,
+	MonthData,
+	CustomError,
+	fetchUserInfo,
+} from "../timeline-data";
+import UserInfoSection from "./UserInfoSection";
+import Timeline from "./Timeline";
+
+// {
+// 	userInfoData &&
+// 		("status" in userInfoData ? (
+// 			<p>`Error! ${userInfoData.error.message}`</p>
+// 		) : (
+// 			<p>{JSON.stringify(userInfoData)}</p>
+// 		));
+// }
+// {
+// 	userInfoData &&
+// 		timelineData &&
+// 		("name" in userInfoData ? <p>JSON.stringify(timelineData)</p> : <p>No timeline data!</p>);
+// }
 
 export default function App() {
 	const [username, setUsername] = useState<string>("");
-	const [timelineData, setTimelineData] = useState<MonthData[] | null>(null);
+	const [userInfoData, setUserInfoData] = useState<UserInfo | CustomError | null>(null);
+	const [timelineData, setTimelineData] = useState<MonthData[] | CustomError[] | null>(null);
 
 	const onButtonClick = async () => {
-		const data: MonthData[] = await fetchTimelineData(username, 2023);
-		setTimelineData(data);
+		const userResponse: UserInfo | CustomError = await fetchUserInfo(username);
+		// Error.
+		if ("status" in userResponse) {
+			setUserInfoData(userResponse);
+			return;
+		}
+		const timelineResponse: CustomError[] | MonthData[] = await fetchTimelineData(
+			username,
+			2023,
+		);
+		setTimelineData(timelineResponse);
 	};
 
 	const onUsernameChange = (event: any) => {
@@ -25,17 +57,14 @@ export default function App() {
 					placeholder="Enter a username"
 					onChange={onUsernameChange}
 				/>
-				{/* <label htmlFor="year-select">Select the year</label>
-				<select name="year-select" id="year-select" defaultValue={2023}>
-					<option value={2023}></option>
-				</select> */}
 				<button type="submit" onClick={onButtonClick}>
-					Click Me!
+					Get Timeline!
 				</button>
 			</div>
 
 			{/* Timeline */}
-			{timelineData ? JSON.stringify(timelineData) : "No data!"}
+			{userInfoData && <UserInfoSection response={userInfoData} />}
+			{timelineData && <Timeline response={timelineData} />}
 		</>
 	);
 }
