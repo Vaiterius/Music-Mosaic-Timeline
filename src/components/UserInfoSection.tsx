@@ -1,4 +1,5 @@
-import { CustomError, UserInfo } from "../timeline-data";
+import { CustomError } from "../types";
+import { UserInfo } from "../types";
 
 export default function UserInfoSection(props: { response: CustomError | UserInfo }) {
 	let hasError: boolean = "status" in props.response ? true : false;

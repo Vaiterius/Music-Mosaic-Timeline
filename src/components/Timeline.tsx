@@ -1,25 +1,19 @@
-import { CustomError, MonthData } from "../timeline-data";
+import { TimelineData, MonthlyData } from "../types";
+import AlbumGrid from "./AlbumGrid";
 
-export default function Timeline(props: { response: CustomError[] | MonthData[] }) {
+/**
+ * The vertical timeline sectioned by months of the given year
+ */
+export default function Timeline(props: { timeline: TimelineData; year: number }) {
 	return (
-		// What the fuck did I write lmao.
-		<>
-			{props.response.map((monthData, index) => (
-				<div key={index}>
-					{monthData[index] && (
-						<div key={monthData[index].monthName}>
-							<h1 className={"text-xl font-bold"}>{monthData[index].monthName}</h1>
-							{monthData.map((albumInfo) => (
-								<div key={albumInfo.data.albumName}>
-									<p>Album name: {albumInfo.data.albumName}</p>
-									<p>Artist: {albumInfo.data.artistName}</p>
-									<p>Scrobbles: {albumInfo.data.scrobbles}</p>
-								</div>
-							))}
-						</div>
-					)}
+		<div>
+			<h2>{props.year}</h2>
+			{props.timeline.map((monthlyData: MonthlyData) => (
+				<div key={monthlyData.monthName}>
+					<h3 className={"text-xl font-bold"}>{monthlyData.monthName}</h3>
+					<AlbumGrid albums={monthlyData.data} />
 				</div>
 			))}
-		</>
+		</div>
 	);
 }

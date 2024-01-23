@@ -1,6 +1,7 @@
 import { test, describe, expect } from "vitest";
 
-import { getMonthlyUnixTimestamps, fetchMonthlyData, MonthTimestamps } from "../timeline-data";
+import { getMonthlyUnixTimestamps, fetchMonthlyData, fetchTimelineData } from "../timeline-data";
+import { MonthTimestamps, TimelineData } from "../types";
 
 const timestamps: MonthTimestamps[] = getMonthlyUnixTimestamps(2022);
 // console.log(timestamps);
@@ -11,7 +12,7 @@ describe("Monthly timestamps", () => {
 	});
 
 	test("Ensure months are in order", () => {
-		let monthNames: string[] = [
+		const monthNames: string[] = [
 			"January",
 			"February",
 			"March",
@@ -85,5 +86,29 @@ describe("Fetching album data of a month", () => {
 		const albumData = await fetchMonthlyData(username, getMonthlyUnixTimestamps(2010)[0]);
 		// console.log(albumData);
 		expect(albumData.weeklyalbumchart.album.length).toBe(0);
+	});
+});
+
+// TODO for years with incomplete or no data.
+describe("Fetching total timeline data of a given year", async () => {
+	const timelineData: TimelineData = await fetchTimelineData("vaiterius", 2023);
+	// console.log(timelineData);
+
+	test("Ensure timeline data is of correct length", () => {
+		expect(timelineData.length).toBe(12);
+	});
+
+	test("Ensure timeline data has the correct months", () => {
+		for (let i: number = 0; i < 12; i++) {
+			expect(timelineData[i].monthName).toBe(timestamps[i].month);
+		}
+	});
+
+	test("Ensure timeline data has an array for albums", () => {
+		expect(Array.isArray(timelineData[0].data)).toBe(true);
+	});
+
+	test("Ensure timeline data has the correct format for album data", () => {
+		expect("name" in timelineData[0].data[0]).toBe(true);
 	});
 });
