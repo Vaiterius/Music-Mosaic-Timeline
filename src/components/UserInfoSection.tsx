@@ -1,5 +1,5 @@
-import { CustomError } from "../types";
-import { UserInfo } from "../types";
+import { CustomError } from "../interfaces-and-types";
+import { UserInfo } from "../interfaces-and-types";
 
 export default function UserInfoSection(props: { response: CustomError | UserInfo }) {
 	let hasError: boolean = "status" in props.response ? true : false;

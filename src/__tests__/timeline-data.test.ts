@@ -1,7 +1,7 @@
 import { test, describe, expect } from "vitest";
 
 import { getMonthlyUnixTimestamps, fetchMonthlyData, fetchTimelineData } from "../timeline-data";
-import { MonthTimestamps, TimelineData } from "../types";
+import { MonthTimestamps, TimelineData } from "../interfaces-and-types";
 
 const timestamps: MonthTimestamps[] = getMonthlyUnixTimestamps(2022);
 // console.log(timestamps);

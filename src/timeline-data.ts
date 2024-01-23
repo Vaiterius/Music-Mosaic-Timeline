@@ -6,7 +6,7 @@
  * for each album, annoyingly. Last.fm should really update their API.
  */
 import axios from "axios";
-import { MonthTimestamps, UserInfo, CustomError, TimelineData } from "./types";
+import { MonthTimestamps, UserInfo, CustomError, TimelineData } from "./interfaces-and-types";
 
 const BASE_URL: string = "https://ws.audioscrobbler.com/2.0";
 
@@ -20,16 +20,25 @@ export async function fetchTimelineData(username: string, year: number): Promise
 			const response = await fetchMonthlyData(username, monthTimestamps);
 			// Allow only up to 16 albums for the 4x4 grid.
 			const truncatedAlbums: any[] = response.weeklyalbumchart.album.slice(0, 16);
+
+			// Fetch urls for each of those albums and insert them into the album data.
+			const albumsWithUrls = await Promise.all(
+				truncatedAlbums.map(async (album) => {
+					const albumInfo = await fetchAlbumInfo(album.artist["#text"], album.name);
+					return {
+						name: album.name,
+						artist: album.artist["#text"],
+						url: albumInfo.album.url,
+						imageUrl: albumInfo.album.image[2]["#text"], // Large.
+						scrobbles: album.playcount,
+					};
+				}),
+			);
+
 			// MonthlyData.
 			return {
 				monthName: monthTimestamps.month,
-				// AlbumData.
-				// TODO add album url.
-				data: truncatedAlbums.map((album) => ({
-					name: album.name,
-					artist: album.artist["#text"],
-					scrobbles: album.playcount,
-				})),
+				data: albumsWithUrls, // AlbumData.
 			};
 		}),
 	);
@@ -94,9 +103,31 @@ export async function fetchMonthlyData(
 }
 
 /**
- * Get the images from each album on the grid.
+ * Get the info of an album.
  */
-export async function fetchAlbumImage(artistName: string, albumName: string): Promise<any> {}
+export async function fetchAlbumInfo(artistName: string, albumName: string): Promise<any> {
+	try {
+		const albumInfo = await axios.get(BASE_URL, {
+			params: {
+				api_key: import.meta.env.VITE_API_KEY,
+				method: "album.getinfo",
+				artist: artistName,
+				album: albumName,
+				format: "json",
+			},
+		});
+		return albumInfo.data;
+	} catch (error: any) {
+		console.error(`Error ocurred fetching album data from the ${albumName} album`);
+		return {
+			status: error.response.data.status,
+			error: {
+				message: error.response.data.message,
+				type: error.response.data.error,
+			},
+		};
+	}
+}
 
 /**
  * Get the starting and ending timestamp for each month of a given year.

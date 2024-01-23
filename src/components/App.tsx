@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { fetchTimelineData, fetchUserInfo } from "../timeline-data";
-import { TimelineData, UserInfo, CustomError } from "../types";
+import { TimelineData, UserInfo, CustomError } from "../interfaces-and-types";
 import UserInfoSection from "./UserInfoSection";
 import Timeline from "./Timeline";
 

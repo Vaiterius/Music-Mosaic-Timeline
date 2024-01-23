@@ -1,4 +1,4 @@
-import { TimelineData, MonthlyData } from "../types";
+import { TimelineData, MonthlyData } from "../interfaces-and-types";
 import AlbumGrid from "./AlbumGrid";
 
 /**

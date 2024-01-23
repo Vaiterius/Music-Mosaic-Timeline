@@ -21,8 +21,9 @@ export interface CustomError {
 
 export interface AlbumData {
 	name: string;
-	// url: string;
 	artist: string;
+	url: string;
+	imageUrl: string;
 	scrobbles: number;
 }
 
