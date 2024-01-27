@@ -4,5 +4,17 @@ export default {
 	theme: {
 		extend: {},
 	},
-	plugins: [],
+	plugins: [require("daisyui")],
+	daisyui: {
+		themes: [
+			{
+				lastfm: {
+					primary: "#FFFFFF",
+					"primary-content": "#8C0000",
+					accent: "#979797",
+					"base-100": "#490808",
+				},
+			},
+		],
+	},
 };

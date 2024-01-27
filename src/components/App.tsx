@@ -41,33 +41,43 @@ export default function App() {
 	};
 
 	return (
-		<>
+		<div className="mt-4 flex flex-col items-center">
 			{/* Entering username and year */}
-			<div>
-				<label htmlFor="username">Enter a username: </label>
-				<input
-					type="text"
-					name="username"
-					id="username"
-					placeholder="e.g. Vaiterius"
-					onChange={onUsernameChange}
-				/>
-				<label htmlFor="year">Select a year: </label>
-				<select name="year" id="year" onChange={onYearChange} defaultValue={2023}>
-					<option value={2020}>2020</option>
-					<option value={2021}>2021</option>
-					<option value={2022}>2022</option>
-					<option value={2023}>2023</option>
-					<option value={2024}>2024</option>
-				</select>
-				<p>Selected year: {searchInput.year}</p>
-				<button type="submit" onClick={onButtonClick}>
-					Get Timeline!
-				</button>
+			<div className="mb-4 flex flex-col items-center">
+				<div className="mb-4 space-x-4">
+					<span className="text-6xl">Your</span>
+					<select
+						className="text-4xl"
+						name="year"
+						id="year"
+						onChange={onYearChange}
+						defaultValue={2023}
+					>
+						<option value={2020}>2020</option>
+						<option value={2021}>2021</option>
+						<option value={2022}>2022</option>
+						<option value={2023}>2023</option>
+						<option value={2024}>2024</option>
+					</select>
+					<span className="text-6xl">Timeline</span>
+				</div>
+				<div className="text-xl">
+					<input
+						className="input input-bordered mr-4"
+						type="text"
+						name="username"
+						id="username"
+						placeholder="Enter a username"
+						onChange={onUsernameChange}
+					/>
+					<button className="btn btn-primary" type="submit" onClick={onButtonClick}>
+						Generate
+					</button>
+				</div>
 			</div>
 
 			{userInfoData && <UserInfoSection response={userInfoData} />}
 			{timelineData && <Timeline timeline={timelineData} year={searchInput.year} />}
-		</>
+		</div>
 	);
 }
