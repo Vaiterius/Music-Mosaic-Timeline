@@ -14,7 +14,7 @@ export default function AlbumGrid(props: { albums: AlbumData[] }) {
 					{/* <a href={album.url}>{album.url}</a> */}
 					{album.imageUrl ? (
 						<img
-							className="m-0 h-24 w-24 p-0"
+							className="m-0 h-24 w-24 rounded-lg p-0"
 							src={album.imageUrl}
 							alt={`${album.name} album by ${album.artist}`}
 						/>
