@@ -62,7 +62,7 @@ export async function fetchUserInfo(username: string): Promise<UserInfo | Custom
 	} catch (error: any) {
 		console.error(`Error ocurred fetching info from user: ${username}`);
 		return {
-			status: error.response.data.status,
+			status: error.response.status,
 			error: {
 				message: error.response.data.message,
 				type: error.response.data.error,
@@ -93,7 +93,7 @@ export async function fetchMonthlyData(
 	} catch (error: any) {
 		console.error(`Error ocurred fetching ${month.month} data: ${error}`);
 		return {
-			status: error.response.data.status,
+			status: error.response.status,
 			error: {
 				message: error.response.data.message,
 				type: error.response.data.error,
@@ -120,7 +120,7 @@ export async function fetchAlbumInfo(artistName: string, albumName: string): Pro
 	} catch (error: any) {
 		console.error(`Error ocurred fetching album data from the ${albumName} album`);
 		return {
-			status: error.response.data.status,
+			status: error.response.status,
 			error: {
 				message: error.response.data.message,
 				type: error.response.data.error,

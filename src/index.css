@@ -5,3 +5,7 @@
 .album-grid {
     width: 24rem;
 }
+
+input[type=number]::-webkit-inner-spin-button {
+    opacity: 1;
+}
