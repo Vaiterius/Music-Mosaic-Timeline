@@ -2,14 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
-.album-grid {
-    width: 24rem;
+html {
+    scroll-behavior: smooth;
+    background-color: #490808;
+    opacity: 1;
+    background-image: radial-gradient(#8C0000 1.65px, #490808 1.65px);
+    background-size: 33px 33px;
 }
 
 input[type=number]::-webkit-inner-spin-button {
     opacity: 1;
 }
 
-.fake-timeline-item {
-    width: 24rem;
-}
