@@ -5,6 +5,7 @@ import { TimelineData, UserInfo, CustomError } from "../interfaces-and-types";
 import UserInfoSection from "./UserInfoSection";
 import Timeline from "./Timeline";
 import Footer from "./Footer";
+import Alert from "./Alert";
 
 export default function App() {
 	const MIN_YEAR: number = 2002;
@@ -131,7 +132,13 @@ export default function App() {
 			</div>
 
 			{/* User metadata after searching */}
-			{userInfoData && <UserInfoSection response={userInfoData} />}
+			{userInfoData &&
+				!loading &&
+				("status" in userInfoData ? (
+					<Alert response={userInfoData} />
+				) : (
+					<UserInfoSection response={userInfoData} />
+				))}
 
 			{/* Loading timeline data */}
 			{loading && (
@@ -148,7 +155,7 @@ export default function App() {
 
 			{/* Backwards and forwards links */}
 			{timelineData && !loading && (
-				<div className="flex w-full justify-between text-primary drop-shadow-lg">
+				<div className="flex w-full justify-between text-primary">
 					<button
 						className={`btn-base-300 btn m-4 ${searchInput.year > MIN_YEAR ? "" : "invisible"}`}
 						onClick={() => updateYearData(searchInput.year - 1)}
@@ -156,9 +163,9 @@ export default function App() {
 						<a href="#top">← Back to {searchInput.year - 1}</a>
 					</button>
 
-					<button className="btn-base-300 btn m-4">
-						<a href="#top">Go back up</a>
-					</button>
+					<a href="#top" className="btn-base-300 btn m-4">
+						Go back up
+					</a>
 
 					<button
 						className={`btn-base-300 btn m-4 ${searchInput.year < CURRENT_YEAR ? "" : "invisible"}`}

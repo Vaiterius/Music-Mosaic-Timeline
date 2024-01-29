@@ -74,7 +74,8 @@ describe("Fetching album data of a month", () => {
 		let username: string = "asdasdasdsdasd";
 		try {
 			// Will always throw error.
-			const albumData = await fetchMonthlyData(username, timestamps[0]);
+			await fetchMonthlyData(username, timestamps[0]);
+			// const albumData = await fetchMonthlyData(username, timestamps[0]);
 			// console.log(albumData);
 		} catch (error: any) {
 			expect(error.message).toBe("User not found");
