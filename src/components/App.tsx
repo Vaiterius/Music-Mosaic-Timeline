@@ -68,8 +68,9 @@ export default function App() {
 	const onYearChange = (event: any) => {
 		// Prevent typing of out-of-range numbers.
 		let year: number = event.target.value;
-		if (year > CURRENT_YEAR) year = CURRENT_YEAR;
-		if (year < 2002) year = 2002;
+		// TODO fix - the commented code below will not work well with mobile touch input.
+		// if (year > CURRENT_YEAR) year = CURRENT_YEAR;
+		// if (year < 2002) year = 2002;
 		event.target.value = year;
 		setSearchInput((prevSearchInput) => ({
 			...prevSearchInput,
@@ -81,36 +82,39 @@ export default function App() {
 		<div id="top" className="mt-4 flex flex-col items-center font-barlow">
 			<div className="mb-4 flex flex-col items-center">
 				{/* Website title */}
-				<div className="m-4 flex flex-col text-primary">
-					<div className="space-x-4 font-bold">
-						<span className="text-6xl">Your</span>
-						<input
-							type="number"
-							name="year"
-							id="year"
-							onChange={onYearChange}
-							className="w-40 rounded-lg px-3 text-5xl text-secondary"
-							defaultValue={searchInput.year}
-							min={MIN_YEAR}
-							max={CURRENT_YEAR}
-							step={1}
-						/>
+				<div className="m-2 flex flex-col text-primary">
+					<div className="flex flex-col items-center space-x-2 font-bold sm:flex-row">
+						<div className="flex flex-row">
+							<span className="mr-2 text-6xl">Your</span>
+							<input
+								type="number"
+								name="year"
+								id="year"
+								onChange={onYearChange}
+								className="w-36 rounded-lg px-3 pr-2 text-5xl text-secondary"
+								defaultValue={searchInput.year}
+								min={MIN_YEAR}
+								max={CURRENT_YEAR}
+								step={1}
+							/>
+						</div>
 						<span className="text-6xl">Timeline</span>
 					</div>
-					<p className="-translate-y-2 self-end text-xl">
+					<p className="-translate-y-1 self-center text-xl sm:-translate-y-2 sm:self-end">
 						with <span className="text-gray font-bold">Last.fm</span>
 					</p>
 				</div>
 
 				{/* Description */}
-				<p className="mb-6 italic text-primary">
-					A year in music taste with generated monthly 4x4 albums
+				<p className="mb-6 flex flex-col items-center italic text-primary sm:flex-row sm:space-x-1">
+					<span>A year in music taste with</span>
+					<span>generated monthly 4x4 albums</span>
 				</p>
 
 				{/* Username search */}
-				<form className="text-xl drop-shadow-xl">
+				<form className="flex flex-col text-xl drop-shadow-xl md:flex-row">
 					<input
-						className="input input-bordered input-primary mr-4 w-72 bg-primary text-black placeholder:text-accent"
+						className="input input-bordered input-primary mb-4 w-80 bg-primary text-black placeholder:text-accent sm:w-96 md:mb-0 md:mr-4"
 						type="text"
 						name="username"
 						id="username"
@@ -118,7 +122,7 @@ export default function App() {
 						onChange={onUsernameChange}
 					/>
 					<button
-						className="btn btn-secondary w-20 align-middle font-bold"
+						className="btn btn-secondary w-full align-middle font-bold md:w-20"
 						type="submit"
 						onClick={onSearchClick}
 					>
@@ -163,7 +167,7 @@ export default function App() {
 						<a href="#top">← Back to {searchInput.year - 1}</a>
 					</button>
 
-					<a href="#top" className="btn-base-300 btn m-4">
+					<a href="#top" className="btn-base-300 btn m-4 hidden sm:flex">
 						Go back up
 					</a>
 

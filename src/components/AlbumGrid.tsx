@@ -20,7 +20,7 @@ export default function AlbumGrid(props: { albums: AlbumData[] }) {
 		}
 	};
 	return (
-		<div className="flex w-96 flex-wrap">
+		<div className="mb-6 flex w-80 flex-wrap md:w-96">
 			{props.albums.map((album, index) => (
 				<div
 					key={`${album.artist}-${album.name}`}
@@ -30,14 +30,14 @@ export default function AlbumGrid(props: { albums: AlbumData[] }) {
 					{album.imageUrl ? (
 						<a href={album.url} target="_blank">
 							<img
-								className={`${getRoundedStyle(index)} m-0 h-24 w-24 p-0`}
+								className={`${getRoundedStyle(index)} m-0 h-20 w-20 p-0 md:h-24 md:w-24`}
 								src={album.imageUrl}
 								alt={`${album.name} album by ${album.artist}`}
 							/>
 						</a>
 					) : (
 						<a href={album.url} target="_blank">
-							<div className="h-24 w-24">No album image</div>
+							<div className="h-20 w-20 md:h-24 md:w-24">No album image</div>
 						</a>
 					)}
 				</div>
