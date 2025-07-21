@@ -15,7 +15,7 @@ export default function App() {
 		year: number;
 	}>({
 		username: "",
-		year: CURRENT_YEAR - 1, // Start with last year.
+		year: CURRENT_YEAR,
 	});
 	const [userInfoData, setUserInfoData] = useState<UserInfo | CustomError | null>(null);
 	const [timelineData, setTimelineData] = useState<TimelineData | null>(null);

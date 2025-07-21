@@ -20,7 +20,7 @@ export default function AlbumGrid(props: { albums: AlbumData[] }) {
 		}
 	};
 	return (
-		<div className="mb-6 flex w-80 flex-wrap md:w-96">
+		<div className="flex w-80 flex-wrap md:w-96">
 			{props.albums.map((album, index) => (
 				<div
 					key={`${album.artist}-${album.name}`}
